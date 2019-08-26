@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Coche (marca, modelo, precio) 
+        {
+            this.marca = marca
+            this.modelo = modelo
+            this.precio = precio
+            this.precioConIva = () => { return this.precio + this.precio * 0.21 }
+        }
+
+        var coches = [
+          new Coche("Renault", "Laguna", 1800), 
+          new Coche("Ford", "Mondeo", 2300),
+          new Coche("Mercedes", "600", 8500),
+          new Coche("Seat", "Cordoba", 3000)
+        ]
+
+        coches.forEach(coche => {
+          console.log(`El coche ${coche.marca} ${coche.modelo} vale $${coche.precio} y $${coche.precioConIva()} con iva incluído`);
+        });
+        
+    </script>
+</body>
+</html>
