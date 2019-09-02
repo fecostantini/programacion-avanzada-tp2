@@ -24,12 +24,12 @@
             artists = response.artists.artist
 
             for (let i = 0; i < TOP_10; i++) {
-                const artist = artists[i];
-
-                console.log(`Puesto: ${i+1}:
+                const artist = artists[i]
+                const ranking = i+1
+                console.log(`Puesto: ${ranking}:
                     Artista: ${artist.name},
                     Reproducciones: ${artist.playcount},
-                    Oyentes: ${artist.listeners}`);
+                    Oyentes: ${artist.listeners}`)
             }
         }
     </script>

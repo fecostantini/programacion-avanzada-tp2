@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+  <script>
+    function Jugador (nombre) {
+
+      this.nombre = nombre
+
+      this.costeCuracion = 30
+      this.costeDisparo = 20
+
+      this.dañoDeAtaque = 25
+      this.poderCuracion = 20
+      
+      this.pv = 100
+      this.sp = 100
+
+      this.consumirSP = (cantidadSP) =>  {
+        this.sp -= cantidadSP
+
+        if (this.sp <= 0) {
+          this.sp = 100
+          console.warn(`${this.nombre} regeneró su sp! (SP actual: ${this.sp})`)
+        }
+      }
+
+      this.recibirDaño = (cantidadDaño) => {
+        this.pv -= cantidadDaño
+        console.log(`${this.nombre} recibó ${cantidadDaño} PV de daño! (PV actuales: ${this.pv})`);
+
+        if (this.pv <= 0) {
+          console.error(`${this.nombre} murió!`);
+          this.pv = 100
+          console.log(`${this.nombre} revivió con ${this.pv} PV!`);
+        }
+      }
+
+      this.recibirCuracion = (cantidadCuracion) => {
+        this.pv += cantidadCuracion
+        console.log(`${this.nombre} recibó ${cantidadCuracion} PV de curación! (PV actuales: ${this.pv})`);
+      }
+
+      this.curar = (jugadorObjetivo) => { 
+        console.log(`${this.nombre} curó a ${jugadorObjetivo.nombre}! (SP Actual: ${this.sp})`);
+        jugadorObjetivo.recibirCuracion(this.poderCuracion)
+
+        this.consumirSP(this.costeCuracion)
+      }
+
+      this.disparar = (jugadorObjetivo) => { 
+        console.log(`${this.nombre} disparó una flecha a ${jugadorObjetivo.nombre}! (SP Actual: ${this.sp})`);
+        jugadorObjetivo.recibirDaño(this.dañoDeAtaque)
+
+        this.consumirSP(this.costeDisparo)
+      }
+    }
+
+    var orco = new Jugador('Orco')
+    var legolas = new Jugador('Legolas')
+    var gandalf = new Jugador('Gandalf')
+    
+    gandalf.curar(legolas) 
+    gandalf.curar(legolas)
+    gandalf.disparar(orco)
+    gandalf.disparar(orco) // Se le termina el SP a Gandalf
+
+    legolas.disparar(orco)
+    legolas.disparar(orco) // Muerte el orco, posteriormente revive (para poder continuar el juego)
+
+
+  </script>
+
+</body>
+
+</html>

@@ -14,24 +14,62 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
+        function getCampos() {
+            return [
+                document.getElementById('nombre'),
+                document.getElementById('mail'),
+                document.getElementById('direccion'),
+                document.getElementById('telefono')
+            ]
+        }
+
         function cancelar() {
-            swal("Cancelar acción", "Usted acaba de cancelar el envío del formulario", "info")
+            swal("Envío cancelado", "Usted acaba de cancelar el envío del formulario", "warning")
+            
+            let campos = getCampos()
+
+            campos.forEach(campo => {
+                campo.value = ''
+            });
+        }
+
+        function enviar() {
+            
+            let campos = getCampos()
+            
+            for (let i = 0; i < campos.length; i++) {
+                let campo = campos[i];
+                if (campo.value == '') {
+                    swal("Error", 'Debe rellenar todos los campos', "error")
+                    return
+                }
+            }
+            
+            swal("Formulario enviado", 'Los datos han sido enviados satisfactoriamente!', "success")
         }
     </script>
 
     <form action="javascript:void(0)">
-
+      <div class="form-group">
         <label>Nombre</label>
-        <input type="text" class="form-control" placeholder="Ingrese su nombre">
+        <input id='nombre' type="text" class="form-control" placeholder="Ingrese su nombre">
+      </div>
+      <div class="form-group">
         <label>Correo</label>
-        <input type="email" class="form-control" placeholder="Ingrese su email">
+        <input id='mail' type="email" class="form-control" placeholder="Ingrese su email">
+      </div>
+      <div class="form-group">
         <label>Dirección</label>
-        <input type="text" class="form-control" placeholder="Ingrese su dirección">
+        <input id='direccion' type="text" class="form-control" placeholder="Ingrese su dirección">
+      </div>
+      <div class="form-group">
         <label>Teléfono</label>
-        <input type="tel" class="form-control" placeholder="Ingrese su teléfono">
+        <input id='telefono' type="tel" class="form-control" placeholder="Ingrese su teléfono">
+      </div>
+        
 
-        <button type="submit" class="btn btn-primary">Enviar</button>
-        <button class="btn btn-primary" onclick="cancelar()">Cancelar</button>
+      <button class="btn btn-primary" onclick="enviar()">Enviar</button>
+      <button class="btn btn-secondary" onclick="cancelar()">Cancelar</button>
     </form>
 </body>
 
