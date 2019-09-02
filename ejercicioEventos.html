@@ -25,12 +25,7 @@
 
         function cancelar() {
             swal("Envío cancelado", "Usted acaba de cancelar el envío del formulario", "warning")
-            
-            let campos = getCampos()
-
-            campos.forEach(campo => {
-                campo.value = ''
-            });
+            document.getElementById('formulario').reset()
         }
 
         function enviar() {
@@ -39,17 +34,17 @@
             
             for (let i = 0; i < campos.length; i++) {
                 let campo = campos[i];
-                if (campo.value == '') {
+                if (campo.value == '') { // Si encuentra algún campo vacío se muestra el mensaje de error
                     swal("Error", 'Debe rellenar todos los campos', "error")
                     return
                 }
             }
-            
+            // Si no hay ningún campo vacío se muestra el mensaje de éxito
             swal("Formulario enviado", 'Los datos han sido enviados satisfactoriamente!', "success")
         }
     </script>
 
-    <form action="javascript:void(0)">
+    <form id='formulario' action="javascript:void(0)">
       <div class="form-group">
         <label>Nombre</label>
         <input id='nombre' type="text" class="form-control" placeholder="Ingrese su nombre">
